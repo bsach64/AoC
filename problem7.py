@@ -3,7 +3,6 @@ sizes = []
 class Folder:
     def __init__(self, name, parent=None):
         self.name = name
-        self.size = 0
         self.subfolders = []
         self.files = dict()
         self.parent = parent
@@ -11,9 +10,6 @@ class Folder:
 def main():
     with open("input7.txt") as file:
         commands = file.readlines()
-        for command in commands:
-            if '\n' in command:
-                command = command.replace('\n','')
     root = Folder(name='/',parent=None)
     current_folder = None
     for command in commands:
