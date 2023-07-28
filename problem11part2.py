@@ -1,3 +1,5 @@
+'''Basically had to look up how to solve the question'''
+
 import re
 
 class Monkey:
@@ -39,32 +41,35 @@ def main():
         temp = Monkey()
         temp.create(note)
         monkeys.append(temp)
-
-    for _ in range(20):
-        monkeys = simulate_round(monkeys)
+    test = 1
+    for monkey in monkeys:
+        test *= monkey.test
+    for _ in range(10000):
+        monkeys = simulate_round(monkeys, test)
     
     counts = []
     for monkey in monkeys:
         counts.append(monkey.inspect_count)
+    print(counts)
     counts.sort(reverse=True)
     print(counts[0]*counts[1])
 
-def operate(operation, x):
+def operate(operation, x, test):
     if operation[0] == "*":
         if operation[1] == "old":
-            return (x * x) // 3
+            return (x * x) % test
         else:
-            return (x * int(operation[1])) // 3
+            return (x * int(operation[1])) % test
     else:
         if operation[1] == "old":
-            return (x + x) // 3
+            return (x + x) % test
         else:
-            return (x + int(operation[1])) // 3
+            return (x + int(operation[1])) % test
 
-def simulate_round(monkeys): 
+def simulate_round(monkeys, test): 
     for i in range(len(monkeys)):
         while len(monkeys[i].items) > 0:
-            monkeys[i].items[0] = operate(monkeys[i].operation, monkeys[i].items[0])
+            monkeys[i].items[0] = operate(monkeys[i].operation, monkeys[i].items[0], test)
             thing = monkeys[i].items.pop(0)
             if thing % monkeys[i].test == 0:
                 monkeys[monkeys[i].actions['true']].items.append(thing)
