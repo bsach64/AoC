@@ -10,6 +10,7 @@ def main():
         if line != '':
             packets.append(eval(line))
 
+    # part one
     counter = 0
     answer = 0
     packet_count = len(packets) - 1
@@ -17,13 +18,31 @@ def main():
         counter += 1
         check = compare(packets[i], packets[i + 1])
         if check:
-            print(counter)
             answer += counter
 
     print(answer)
+    # part two
+
+    packets.append([[2]])
+    packets.append([[6]])
+
+    packet_count = len(packets)
+    for _ in range(packet_count):
+        for i in range(packet_count - 1):
+            if not compare(packets[i], packets[i+1]):
+                packets[i], packets[i+1] = packets[i+1], packets[i]
+
+    key = 1
+    for i in range(packet_count):
+        if packets[i] in [[[2]],[[6]]]:
+            key *= (i + 1)
+    
+    print(key)
+ 
+
 
 def compare(one, two):
-    if isinstance(one, int) and isinstance(two, int):
+    if isinstance(one, int) and isinstance(two, int):   
         if one < two:
             return True
         elif one > two:
