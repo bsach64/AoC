@@ -13,7 +13,6 @@ type Coordinate struct {
     end int
 }
 
-
 func main() {
     file, err := os.ReadFile("3i.txt")
     if err != nil {
@@ -60,15 +59,11 @@ func isDigit(symbol byte) bool {
 func isValidNumber(co Coordinate, engineMap []string) (int, bool) {
     num, _ := strconv.Atoi(engineMap[co.row][co.start: co.end + 1])
     pRow, nRow, pCol, nCol := co.row - 1, co.row + 1, co.start - 1, co.end + 1
-    if pRow > -1 {
-	if checkRow(pRow, co, engineMap) {
-	    return num, true
-	}
+    if pRow > -1 && checkRow(pRow, co, engineMap) {
+	return num, true
     }
-    if nRow < len(engineMap) {
-	if checkRow(nRow, co, engineMap) {
-	    return num, true
-	}
+    if nRow < len(engineMap) && checkRow(nRow, co, engineMap) {
+	return num, true
     }
     if pCol > -1 && engineMap[co.row][pCol] != '.' {
 	return num, true
