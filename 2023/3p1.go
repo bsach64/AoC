@@ -35,13 +35,9 @@ func validNumbers(engineMap []string) []int {
 	for j < len(engineMap[i]) {
 	    if isDigit(row[j]) {
 		co := Coordinate{row: i, start: j, end: j}
-		if j + 1 < len(engineMap[i]) && isDigit(row[j + 1]) {
+		for j + 1 < len(engineMap[i]) && isDigit(row[j + 1]) {
 		    co.end++
 		    j++
-		    if j + 1 < len(engineMap[i]) && isDigit(row[j + 1]) {
-			co.end++
-			j++
-		    }
 		}
 		num, valid := isValidNumber(co, engineMap) 
 		if valid {
@@ -62,31 +58,15 @@ func isDigit(symbol byte) bool {
 }
 
 func isValidNumber(co Coordinate, engineMap []string) (int, bool) {
-    num := getNumber(engineMap[co.row][co.start: co.end + 1])
+    num, _ := strconv.Atoi(engineMap[co.row][co.start: co.end + 1])
     pRow, nRow, pCol, nCol := co.row - 1, co.row + 1, co.start - 1, co.end + 1
     if pRow > -1 {
-	if pCol > -1 && engineMap[pRow][pCol] != '.' { 
-	    return num, true
-	}
-	for j := co.start; j < co.end + 1; j++ {
-	    if engineMap[pRow][j] != '.' {
-		return num, true
-	    }
-	}
-	if nCol < len(engineMap[pRow]) && engineMap[pRow][nCol] != '.' {
+	if checkRow(pRow, co, engineMap) {
 	    return num, true
 	}
     }
     if nRow < len(engineMap) {
-	if pCol > -1 && engineMap[nRow][pCol] != '.' { 
-	    return num, true
-	}
-	for j := co.start; j < co.end + 1; j++ {
-	    if engineMap[nRow][j] != '.' {
-		return num, true 
-	    }
-	}
-	if nCol < len(engineMap[nRow]) && engineMap[nRow][nCol] != '.' {
+	if checkRow(nRow, co, engineMap) {
 	    return num, true
 	}
     }
@@ -99,7 +79,17 @@ func isValidNumber(co Coordinate, engineMap []string) (int, bool) {
     return -1, false
 }
 
-func getNumber(num string) int {
-    number, _ := strconv.Atoi(num)
-    return number
+func checkRow(row int, co Coordinate, engineMap []string) bool {
+    if co.start - 1 > -1 && engineMap[row][co.start - 1] != '.' { 
+	return true
+    }
+    for j := co.start; j < co.end + 1; j++ {
+	if engineMap[row][j] != '.' {
+	    return true
+	}
+    }
+    if co.end + 1 < len(engineMap[row]) && engineMap[row][co.end + 1] != '.' {
+	return true
+    }
+    return false
 }
