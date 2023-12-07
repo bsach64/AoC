@@ -23,6 +23,7 @@ def main():
             pass
     print(min(paths))
 
+
 def shortest_path(map, source, target):
     frontier = QueueFrontier()
     explored = set()
@@ -53,6 +54,7 @@ def check_goal(node, target):
             node = node.parent
         path.reverse()
         return path
+
 
 def possible_moves(map, location):
     elevation = map[location[0]][location[1]]

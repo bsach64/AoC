@@ -1,22 +1,12 @@
-with open("input", "r") as file:
-    x = 0
+with open("input1.txt", "r") as file:
     calories = [0]
     for line in file:
-        line.strip()
-        string = line
-        if line in ['\n', '\r\n']:
-            y = 0
-            calories.append(y)
-            x = x + 1
-        else: 
-            z = int(string)
-            calories[x] = calories[x] + z
+        if line == '\n':
+            calories.append(0)
+        else:
+            calories[-1] = calories[-1] + int(line)
 
-calories.sort(reverse = True)
+calories.sort(reverse=True)
 
-sum = 0
-for i in range(0,3):
-    print(f"{calories[i]}")
-    sum = sum + calories[i]
-
-print(f"{sum}")
+sum = calories[0] + calories[1] + calories[2]
+print(sum)

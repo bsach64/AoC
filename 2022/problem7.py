@@ -1,5 +1,6 @@
 sizes = []
 
+
 class Folder:
     def __init__(self, name, parent=None):
         self.name = name
@@ -7,10 +8,11 @@ class Folder:
         self.files = dict()
         self.parent = parent
 
+
 def main():
-    with open("input7.txt") as file:
+    with open("sample7.txt") as file:
         commands = file.readlines()
-    root = Folder(name='/',parent=None)
+    root = Folder(name='/', parent=None)
     current_folder = None
     for command in commands:
         if command[0] == '$':
@@ -28,7 +30,7 @@ def main():
         else:
             if command[:3] == 'dir':
                 folder_name = command[4:].strip()
-                current_folder.subfolders.append(Folder(name=folder_name,parent=current_folder))
+                current_folder.subfolders.append(Folder(name=folder_name, parent=current_folder))
             else:
                 size, name = command.strip().split(" ")
                 size = int(size)
@@ -50,9 +52,8 @@ def main():
         if entry >= required_space:
             large.append(entry)
     print(min(large))
-    
-    
-    
+    display_structure(root)
+
 
 def get_size(folder):
     global sizes
@@ -61,11 +62,13 @@ def get_size(folder):
         get_size(subfolder)
     return sizes
 
+
 def find(root, name):
     for folder in root.subfolders:
         if folder.name == name:
             return True
     return False
+
 
 def get_depth(folder: Folder):
     level = 0
@@ -73,7 +76,8 @@ def get_depth(folder: Folder):
     while p:
         level += 1
         p = p.parent
-    return level 
+    return level
+
 
 def dir_size(folder: Folder):
     total_size = 0
@@ -83,6 +87,7 @@ def dir_size(folder: Folder):
         total_size += dir_size(subfolder)
     return total_size
 
+
 def display_structure(folder: Folder):
     depth = "--" * get_depth(folder)
     print(f"{depth} DIR: {folder.name}")
@@ -90,6 +95,7 @@ def display_structure(folder: Folder):
         print(f"{depth} {entry}, {folder.files[entry]}")
     for subfolder in folder.subfolders:
         display_structure(subfolder)
+
 
 if __name__ == "__main__":
     main()

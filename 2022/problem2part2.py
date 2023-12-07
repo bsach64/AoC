@@ -1,5 +1,5 @@
 # A ROCK  1
-# B PAPER  2 
+# B PAPER  2
 # C SCISSORS  3
 # X loss = 0
 # Y draw = 3
@@ -33,6 +33,6 @@ with open("day2", "r") as file:
                 score = score + 3
             elif line[0] == 'C':
                 score = score + 1
-        
+
 
 print(f"{score}")
