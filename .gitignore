@@ -1,4 +1,3 @@
-/__pycache__
 *.txt
-why11.py
-everything.code-workspace
+*.o
+a.out
