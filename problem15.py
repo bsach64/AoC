@@ -1,12 +1,12 @@
 import re
-
+import sys
 
 min_x = -2
-min_y = 0
+min_y = -2
 
 
 def main():
-    region = [['.' for _ in range(31)] for _ in range(23)]
+    region = [['.' for _ in range(31)] for _ in range(31)]
 
     with open("sample15.txt") as file:
         lines = file.readlines()
@@ -15,11 +15,14 @@ def main():
 
     for line in lines:
         match = re.search(pattern, line)
+        if not match:
+            sys.exit("Could not find pattern")
         sensor = (int(match.group(1)) - min_x, int(match.group(2)) - min_y)
         beacon = (int(match.group(3)) - min_x, int(match.group(4)) - min_y)
-        region[sensor[1]][sensor[0]] = 'S'
-        region[beacon[1]][beacon[0]] = 'B'
-        mark_no_beacon(region, sensor, beacon)
+        if sensor > (0, 0) and beacon > (0, 0):
+            region[sensor[1]][sensor[0]] = 'S'
+            region[beacon[1]][beacon[0]] = 'B'
+            mark_no_beacon(region, sensor, beacon)
 
     print_map(region)
 
@@ -33,7 +36,7 @@ def print_map(region):
 
 def mark_no_beacon(region, sensor, beacon, y=10):
     m_distance = abs(sensor[0] - beacon[0]) + abs(sensor[1] - beacon[1])
-    print(sensor, beacon, m_distance)
+    print("sensor", sensor, "beacon", beacon, m_distance)
     for i in range(31):
         distance = abs(sensor[0] - i) + abs(sensor[1] - 10)
         if distance == m_distance:
