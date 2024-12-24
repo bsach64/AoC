@@ -33,4 +33,3 @@ for r in range(rows):
             res += bfs(r, c)
 
 print(res)
-
