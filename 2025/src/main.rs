@@ -1,48 +1,12 @@
-use std::fs;
-
-fn day1(filename: &str) -> u64 {
-    let contents = fs::read_to_string(filename)
-        .expect("could not open input file");
-
-    let lines = contents.lines();
-    let mut res = 0;
-    let mut cur = 50;
-
-    for line in lines {
-        let mut chars = line.chars();
-
-        match chars.nth(0).expect("did not get direction") {
-            'L' => {
-                let diff: i64 = chars.as_str().parse().expect("could not get integer");
-                for _ in 0..diff {
-                    assert!(cur >= 0 && cur <= 99, "value of cur: {}", cur);
-                    if cur == 0 {
-                        cur = 99;
-                    } else {
-                        cur -= 1;
-                        if cur == 0 {
-                            res += 1;
-                        }
-                    }
-                }
-            },
-            'R' => {
-                let diff: i64 = chars.as_str().parse().expect("could not get integer");
-                for _ in 0..diff {
-                    assert!(cur >= 0 && cur <= 99);
-                    cur += 1;
-                    if cur == 100 {
-                        res += 1;
-                        cur = 0;
-                    }
-                }
-            },
-            _ => println!("Invalid Direction")
-        }
-    }
-    res
-}
+mod day1;
+mod day2;
+mod day3;
 
 fn main() {
-    println!("{}", day1("src/1.txt"));
+    println!("Day 1 Part 1: {}", day1::part1("src/1.txt"));
+    println!("Day 1 Part 2: {}", day1::part2("src/1.txt"));
+    println!("Day 2 Part 1: {}", day2::part1("src/2.txt"));
+    println!("Day 2 Part 2: {}", day2::part2("src/2.txt"));
+    println!("Day 3 Part 1: {}", day3::part1("src/3.txt"));
+    println!("Day 3 Part 2: {}", day3::part2("src/3.txt"));
 }
