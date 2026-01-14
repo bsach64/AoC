@@ -9,19 +9,8 @@ pub fn part1(filename: &str) -> i64 {
 
     for line in lines {
         let nums: Vec<i64> = line.chars().map(|x| x.to_string().parse().unwrap()).collect();
-        let mut first_num = 0;
-        let mut second_num = 0;
-
-        for i in 0..nums.len() {
-            if nums[i] > first_num && i < nums.len() - 1 {
-                first_num = nums[i];
-                second_num = 0;
-            } else if nums[i] > second_num {
-                second_num = nums[i];
-            }
-        }
-
-        res += (10 * first_num) + second_num;
+        let ans: i64 = do_part2(nums, 0, 2).parse().unwrap();
+        res += ans;
     }
     res
 }
