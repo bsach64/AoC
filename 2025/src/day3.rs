@@ -1,14 +1,16 @@
 use std::fs;
 
 pub fn part1(filename: &str) -> i64 {
-    let contents = fs::read_to_string(filename)
-        .expect("could not open input file");
+    let contents = fs::read_to_string(filename).expect("could not open input file");
 
     let lines = contents.lines();
     let mut res = 0;
 
     for line in lines {
-        let nums: Vec<i64> = line.chars().map(|x| x.to_string().parse().unwrap()).collect();
+        let nums: Vec<i64> = line
+            .chars()
+            .map(|x| x.to_string().parse().unwrap())
+            .collect();
         let ans: i64 = do_part2(nums, 0, 2).parse().unwrap();
         res += ans;
     }
@@ -22,11 +24,15 @@ pub fn do_part2(nums: Vec<i64>, start: usize, left: usize) -> String {
     } else {
         let elem_count = nums.len() - start;
         let offset = elem_count - left + 1;
-        let slice = &nums[start..start+offset];
+        let slice = &nums[start..start + offset];
         let max_val = slice.iter().max().unwrap_or(&0);
         let idx = slice.iter().position(|x| x == max_val).unwrap_or(0);
         // println!("slice: {:?}, start: {}, offset: {}, elem_count: {}, idx: {}, max_val: {}", slice, start, offset, elem_count, start+idx+1, max_val);
-        format!("{}{}", max_val, do_part2(nums.clone(), start+idx+1, left-1))
+        format!(
+            "{}{}",
+            max_val,
+            do_part2(nums.clone(), start + idx + 1, left - 1)
+        )
     }
 }
 
@@ -38,14 +44,16 @@ pub fn part2(filename: &str) -> i64 {
     // this basically recursive algo will do the job
     // will be fun to implement ig as well
 
-    let contents = fs::read_to_string(filename)
-        .expect("could not open input file");
+    let contents = fs::read_to_string(filename).expect("could not open input file");
 
     let lines = contents.lines();
     let mut res: i64 = 0;
 
     for line in lines {
-        let nums: Vec<i64> = line.chars().map(|x| x.to_string().parse().unwrap()).collect();
+        let nums: Vec<i64> = line
+            .chars()
+            .map(|x| x.to_string().parse().unwrap())
+            .collect();
 
         let ans: i64 = do_part2(nums, 0, 12).parse().unwrap();
         res += ans;

@@ -39,7 +39,7 @@ fn is_crazy_invalid(num: i64) -> bool {
         for x in chunks {
             if x != first {
                 failed = true;
-                break
+                break;
             }
         }
 
@@ -51,19 +51,20 @@ fn is_crazy_invalid(num: i64) -> bool {
 }
 
 pub fn part1(filename: &str) -> i64 {
-    let contents = fs::read_to_string(filename)
-        .expect("could not open input file");
+    let contents = fs::read_to_string(filename).expect("could not open input file");
 
     let mut part1 = Vec::<i64>::new();
     let pairs = contents
         .split(",")
         .filter_map(|c| {
-            c.trim().split_once('-')
-            .and_then(|(l, r)| {
-                    Some((l.parse::<i64>().ok().expect("Nope"), r.parse::<i64>().ok().expect("Nope")))
-                })
-    })
-    .collect::<Vec<(i64, i64)>>();
+            c.trim().split_once('-').and_then(|(l, r)| {
+                Some((
+                    l.parse::<i64>().ok().expect("Nope"),
+                    r.parse::<i64>().ok().expect("Nope"),
+                ))
+            })
+        })
+        .collect::<Vec<(i64, i64)>>();
 
     for p in &pairs {
         for num in p.0..p.1 + 1 {
@@ -77,19 +78,20 @@ pub fn part1(filename: &str) -> i64 {
 }
 
 pub fn part2(filename: &str) -> i64 {
-    let contents = fs::read_to_string(filename)
-        .expect("could not open input file");
+    let contents = fs::read_to_string(filename).expect("could not open input file");
 
     let mut part2 = Vec::<i64>::new();
     let pairs = contents
         .split(",")
         .filter_map(|c| {
-            c.trim().split_once('-')
-            .and_then(|(l, r)| {
-                    Some((l.parse::<i64>().ok().expect("Nope"), r.parse::<i64>().ok().expect("Nope")))
-                })
-    })
-    .collect::<Vec<(i64, i64)>>();
+            c.trim().split_once('-').and_then(|(l, r)| {
+                Some((
+                    l.parse::<i64>().ok().expect("Nope"),
+                    r.parse::<i64>().ok().expect("Nope"),
+                ))
+            })
+        })
+        .collect::<Vec<(i64, i64)>>();
 
     for p in &pairs {
         for num in p.0..p.1 + 1 {

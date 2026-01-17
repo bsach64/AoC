@@ -1,8 +1,7 @@
 use std::fs;
 
 pub fn part1(filename: &str) -> u64 {
-    let contents = fs::read_to_string(filename)
-        .expect("could not open input file");
+    let contents = fs::read_to_string(filename).expect("could not open input file");
 
     let lines = contents.lines();
     let mut res = 0;
@@ -25,7 +24,7 @@ pub fn part1(filename: &str) -> u64 {
                         }
                     }
                 }
-            },
+            }
             'R' => {
                 let diff: i64 = chars.as_str().parse().expect("could not get integer");
                 for _ in 0..diff {
@@ -36,8 +35,8 @@ pub fn part1(filename: &str) -> u64 {
                         cur = 0;
                     }
                 }
-            },
-            _ => println!("Invalid Direction")
+            }
+            _ => println!("Invalid Direction"),
         }
     }
     res

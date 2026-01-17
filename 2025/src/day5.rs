@@ -1,4 +1,4 @@
-use std::{cmp::min, fs, cmp::max};
+use std::{cmp::max, cmp::min, fs};
 
 pub fn merge_intervals(intervals: Vec<(u64, u64)>) -> Vec<(u64, u64)> {
     let mut res: Vec<(u64, u64)> = vec![];
@@ -11,12 +11,7 @@ pub fn merge_intervals(intervals: Vec<(u64, u64)>) -> Vec<(u64, u64)> {
 
         if res[res.len() - 1].1 >= intervals[i].0 {
             let last = res.pop().unwrap();
-            res.push(
-                (
-                    min(last.0, intervals[i].0),
-                    max(last.1, intervals[i].1)
-                )
-            );
+            res.push((min(last.0, intervals[i].0), max(last.1, intervals[i].1)));
         } else {
             res.push(intervals[i]);
         }
@@ -25,8 +20,7 @@ pub fn merge_intervals(intervals: Vec<(u64, u64)>) -> Vec<(u64, u64)> {
 }
 
 pub fn day5(filename: &str) -> (i64, u64) {
-    let contents = fs::read_to_string(filename)
-        .expect("could not open input file");
+    let contents = fs::read_to_string(filename).expect("could not open input file");
 
     let mut lines = contents.lines();
     let mut intervals: Vec<(u64, u64)> = vec![];
